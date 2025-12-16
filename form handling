@@ -1,0 +1,69 @@
+import React, { useState } from "react";
+
+function Form() {
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPass: "",
+  });
+
+  const [errors, setErrors] = useState({});
+
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    let err = {};
+
+    if (!form.name) err.name = "Name is required";
+
+    if (!form.email) err.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(form.email))
+      err.email = "Invalid email format";
+
+    if (!form.phone) err.phone = "Phone is required";
+    else if (!/^\d{10}$/.test(form.phone))
+      err.phone = "Phone must be 10 digits";
+
+    if (!form.password) err.password = "Password is required";
+    else if (form.password.length < 6)
+      err.password = "Min 6 characters";
+
+    if (!form.confirmPass) err.confirmPass = "Confirm password required";
+    else if (form.confirmPass !== form.password)
+      err.confirmPass = "Passwords do not match";
+
+    setErrors(err);
+
+    if (Object.keys(err).length === 0) {
+      alert("Form Submitted Successfully!");
+      console.log(form);
+    }
+  };
+
+  return (
+    <div style={{ width: 300, margin: "auto" }}>
+      <h3>Validation Form</h3>
+      <form onSubmit={handleSubmit}>
+        {["name", "email", "phone", "password", "confirmPass"].map((field) => (
+          <div key={field}>
+            <input
+              type={field.includes("password") ? "password" : "text"}
+              name={field}
+              placeholder={`Enter ${field}`}
+              onChange={handleChange}
+            />
+            <p style={{ color: "red" }}>{errors[field]}</p>
+          </div>
+        ))}
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  );
+}
+
+export default Form;

@@ -1,0 +1,151 @@
+
+import { useState } from "react";
+
+export default function App() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    workshop: "",
+    experience: ""
+  });
+
+  const workshops = ["React Basics", "Advanced JavaScript", "UI/UX Design"];
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    alert(
+      `Registration Submitted!\n\nName: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nWorkshop: ${formData.workshop}\nExperience: ${formData.experience}`
+    );
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      workshop: "",
+      experience: ""
+    });
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.heading}>Online Workshop Registration</h1>
+
+      <form style={styles.form} onSubmit={handleSubmit}>
+        <input
+          style={styles.input}
+          type="text"
+          name="name"
+          placeholder="Full Name"
+          value={formData.name}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          style={styles.input}
+          type="email"
+          name="email"
+          placeholder="Email Address"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
+
+        <input
+          style={styles.input}
+          type="tel"
+          name="phone"
+          placeholder="Phone Number"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+        />
+
+        <select
+          style={styles.input}
+          name="workshop"
+          value={formData.workshop}
+          onChange={handleChange}
+          required
+        >
+          <option value="">Select Workshop</option>
+          {workshops.map((w, i) => (
+            <option key={i} value={w}>{w}</option>
+          ))}
+        </select>
+
+        <textarea
+          style={styles.input}
+          name="experience"
+          placeholder="Brief Experience / Background"
+          value={formData.experience}
+          onChange={handleChange}
+        />
+
+        <button type="submit" style={styles.button}>
+          Register
+        </button>
+      </form>
+
+      <h2>Live Preview</h2>
+      <div style={styles.preview}>
+        <p><strong>Name:</strong> {formData.name || "-"}</p>
+        <p><strong>Email:</strong> {formData.email || "-"}</p>
+        <p><strong>Phone:</strong> {formData.phone || "-"}</p>
+        <p><strong>Workshop:</strong> {formData.workshop || "-"}</p>
+        <p><strong>Experience:</strong> {formData.experience || "-"}</p>
+      </div>
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "600px",
+    margin: "50px auto",
+    padding: "20px",
+    fontFamily: "Arial, sans-serif",
+    backgroundColor: "#f4f6f8",
+    borderRadius: "8px"
+  },
+  heading: {
+    textAlign: "center"
+  },
+  form: {
+    display: "grid",
+    gap: "10px",
+    marginBottom: "30px"
+  },
+  input: {
+    padding: "10px",
+    fontSize: "16px",
+    borderRadius: "4px",
+    border: "1px solid #ccc"
+  },
+  button: {
+    padding: "12px",
+    fontSize: "16px",
+    backgroundColor: "#3498db",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+    borderRadius: "4px"
+  },
+  preview: {
+    padding: "15px",
+    backgroundColor: "#fff",
+    borderRadius: "6px",
+    border: "1px solid #ddd"
+  }
+};
+
+ One attachment
+  •  Scanned by Gmail
+Displaying Screenshot (1).png.

@@ -1,0 +1,175 @@
+
+import { useState } from "react";
+
+export default function App() {
+  const [name, setName] = useState("");
+  const [pickup, setPickup] = useState("");
+  const [drop, setDrop] = useState("");
+  const [cabType, setCabType] = useState("");
+  const [distance, setDistance] = useState("");
+  const [bookings, setBookings] = useState([]);
+
+  const cabPrices = {
+    Mini: 10,
+    Sedan: 15,
+    SUV: 20
+  };
+
+  const handleBooking = () => {
+    if (!name || !pickup || !drop || !cabType || !distance || distance <= 0) {
+      alert("Please fill all details correctly.");
+      return;
+    }
+
+    const fare = distance * cabPrices[cabType];
+
+    const newBooking = {
+      name,
+      pickup,
+      drop,
+      cabType,
+      distance,
+      fare
+    };
+
+    setBookings([newBooking, ...bookings]);
+
+    // Clear input fields
+    setName("");
+    setPickup("");
+    setDrop("");
+    setCabType("");
+    setDistance("");
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.heading}>Online Cab Booking Dashboard</h1>
+
+      <div style={styles.form}>
+        <input
+          style={styles.input}
+          type="text"
+          placeholder="Customer Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <input
+          style={styles.input}
+          type="text"
+          placeholder="Pickup Location"
+          value={pickup}
+          onChange={(e) => setPickup(e.target.value)}
+        />
+        <input
+          style={styles.input}
+          type="text"
+          placeholder="Drop Location"
+          value={drop}
+          onChange={(e) => setDrop(e.target.value)}
+        />
+        <select
+          style={styles.input}
+          value={cabType}
+          onChange={(e) => setCabType(e.target.value)}
+        >
+          <option value="">Select Cab Type</option>
+          <option value="Mini">Mini ($10/km)</option>
+          <option value="Sedan">Sedan ($15/km)</option>
+          <option value="SUV">SUV ($20/km)</option>
+        </select>
+        <input
+          style={styles.input}
+          type="number"
+          placeholder="Distance (km)"
+          min="1"
+          value={distance}
+          onChange={(e) => setDistance(Number(e.target.value))}
+        />
+        <button style={styles.button} onClick={handleBooking}>
+          Book Cab
+        </button>
+      </div>
+
+      <h2>Booking Summary</h2>
+      {bookings.length === 0 ? (
+        <p>No bookings yet.</p>
+      ) : (
+        <table style={styles.table}>
+          <thead>
+            <tr>
+              <th style={styles.th}>Customer</th>
+              <th style={styles.th}>Pickup</th>
+              <th style={styles.th}>Drop</th>
+              <th style={styles.th}>Cab Type</th>
+              <th style={styles.th}>Distance</th>
+              <th style={styles.th}>Fare ($)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {bookings.map((b, index) => (
+              <tr key={index}>
+                <td style={styles.td}>{b.name}</td>
+                <td style={styles.td}>{b.pickup}</td>
+                <td style={styles.td}>{b.drop}</td>
+                <td style={styles.td}>{b.cabType}</td>
+                <td style={styles.td}>{b.distance}</td>
+                <td style={styles.td}>{b.fare}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "800px",
+    margin: "50px auto",
+    padding: "20px",
+    fontFamily: "Arial, sans-serif",
+    background: "#f4f6f8",
+    borderRadius: "8px"
+  },
+  heading: {
+    textAlign: "center"
+  },
+  form: {
+    display: "grid",
+    gap: "10px",
+    marginBottom: "30px"
+  },
+  input: {
+    padding: "10px",
+    fontSize: "16px"
+  },
+  button: {
+    padding: "10px",
+    backgroundColor: "#3498db",
+    color: "#fff",
+    border: "none",
+    fontSize: "16px",
+    cursor: "pointer"
+  },
+  table: {
+    width: "100%",
+    borderCollapse: "collapse"
+  },
+  th: {
+    padding: "10px",
+    backgroundColor: "#2c3e50",
+    color: "#fff",
+    border: "1px solid #ddd"
+  },
+  td: {
+    padding: "10px",
+    border: "1px solid #ddd",
+    textAlign: "center"
+  }
+};
+
+ One attachment
+  •  Scanned by Gmail
+Displaying Screenshot (1).png.

@@ -1,0 +1,107 @@
+
+import { useState } from "react";
+
+export default function App() {
+  const [name, setName] = useState("");
+  const [room, setRoom] = useState("");
+  const [nights, setNights] = useState(1);
+  const [result, setResult] = useState("");
+
+  const roomPrices = {
+    Single: 100,
+    Double: 180,
+    Deluxe: 250
+  };
+
+  const handleReservation = () => {
+    if (!name || !room || nights <= 0) {
+      setResult("❌ Please fill all details correctly.");
+      return;
+    }
+
+    const total = roomPrices[room] * nights;
+
+    setResult(
+      `✅ Reservation Confirmed!
+Customer: ${name}
+Room Type: ${room}
+Nights: ${nights}
+Total Cost: $${total}`
+    );
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1>Hotel Reservation System</h1>
+
+      <input
+        style={styles.input}
+        type="text"
+        placeholder="Enter your name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+
+      <select
+        style={styles.input}
+        value={room}
+        onChange={(e) => setRoom(e.target.value)}
+      >
+        <option value="">Select Room Type</option>
+        <option value="Single">Single Room ($100)</option>
+        <option value="Double">Double Room ($180)</option>
+        <option value="Deluxe">Deluxe Room ($250)</option>
+      </select>
+
+      <input
+        style={styles.input}
+        type="number"
+        min="1"
+        value={nights}
+        onChange={(e) => setNights(e.target.value)}
+      />
+
+      <button style={styles.button} onClick={handleReservation}>
+        Reserve Now
+      </button>
+
+      {result && <pre style={styles.result}>{result}</pre>}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "400px",
+    margin: "50px auto",
+    padding: "20px",
+    fontFamily: "Arial",
+    background: "#f4f6f8",
+    borderRadius: "8px",
+    textAlign: "center"
+  },
+  input: {
+    width: "100%",
+    padding: "10px",
+    margin: "10px 0"
+  },
+  button: {
+    width: "100%",
+    padding: "10px",
+    background: "#3498db",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "16px"
+  },
+  result: {
+    marginTop: "15px",
+    background: "#fff",
+    padding: "10px",
+    textAlign: "left"
+  }
+};
+
+ One attachment
+  •  Scanned by Gmail
+Displaying Screenshot (1).png.

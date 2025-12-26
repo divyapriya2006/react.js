@@ -1,0 +1,153 @@
+
+import { useState } from "react";
+
+export default function App() {
+  const [name, setName] = useState("");
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [feedbacks, setFeedbacks] = useState([]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name || rating === 0 || !comment) {
+      alert("Please fill all fields and select a rating.");
+      return;
+    }
+
+    const newFeedback = {
+      name,
+      rating,
+      comment,
+      id: Date.now()
+    };
+
+    setFeedbacks([newFeedback, ...feedbacks]);
+
+    // Clear form
+    setName("");
+    setRating(0);
+    setComment("");
+  };
+
+  return (
+    <div style={styles.container}>
+      <h1 style={styles.heading}>Student Feedback System</h1>
+
+      <form style={styles.form} onSubmit={handleSubmit}>
+        <input
+          style={styles.input}
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+
+        <div style={styles.ratingContainer}>
+          <span>Rating: </span>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span
+              key={star}
+              style={{
+                cursor: "pointer",
+                color: star <= rating ? "#f39c12" : "#ccc",
+                fontSize: "24px",
+                marginRight: "5px"
+              }}
+              onClick={() => setRating(star)}
+            >
+              ★
+            </span>
+          ))}
+        </div>
+
+        <textarea
+          style={styles.textarea}
+          placeholder="Your Comments"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          required
+        />
+
+        <button style={styles.button} type="submit">
+          Submit Feedback
+        </button>
+      </form>
+
+      <h2>Feedbacks</h2>
+      {feedbacks.length === 0 ? (
+        <p>No feedbacks yet.</p>
+      ) : (
+        <div style={styles.feedbackList}>
+          {feedbacks.map((fb) => (
+            <div key={fb.id} style={styles.feedbackItem}>
+              <p><strong>{fb.name}</strong> rated <strong>{fb.rating}/5</strong></p>
+              <p>{fb.comment}</p>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+const styles = {
+  container: {
+    maxWidth: "600px",
+    margin: "50px auto",
+    padding: "20px",
+    fontFamily: "Arial, sans-serif",
+    backgroundColor: "#f4f6f8",
+    borderRadius: "8px"
+  },
+  heading: {
+    textAlign: "center"
+  },
+  form: {
+    display: "grid",
+    gap: "10px",
+    marginBottom: "30px"
+  },
+  input: {
+    padding: "10px",
+    fontSize: "16px",
+    borderRadius: "4px",
+    border: "1px solid #ccc"
+  },
+  ratingContainer: {
+    display: "flex",
+    alignItems: "center",
+    gap: "5px"
+  },
+  textarea: {
+    padding: "10px",
+    fontSize: "16px",
+    borderRadius: "4px",
+    border: "1px solid #ccc",
+    minHeight: "80px"
+  },
+  button: {
+    padding: "12px",
+    fontSize: "16px",
+    backgroundColor: "#3498db",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+    borderRadius: "4px"
+  },
+  feedbackList: {
+    display: "flex",
+    flexDirection: "column",
+    gap: "10px"
+  },
+  feedbackItem: {
+    padding: "10px",
+    borderRadius: "4px",
+    backgroundColor: "#fff",
+    border: "1px solid #ddd"
+  }
+};
+
+ One attachment
+  •  Scanned by Gmail
+Displaying Screenshot (1).png.

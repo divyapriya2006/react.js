@@ -1,0 +1,78 @@
+// NotificationCenter.jsx
+import React, { useState } from "react";
+
+const NotificationCenter = () => {
+  const [notifications, setNotifications] = useState([]);
+
+  // Add a new notification
+  const addNotification = () => {
+    const newNotification = {
+      id: Date.now(),
+      message: "You have a new notification!",
+      time: new Date().toLocaleTimeString()
+    };
+
+    setNotifications([newNotification, ...notifications]);
+  };
+
+  // Remove a notification
+  const dismissNotification = (id) => {
+    setNotifications(
+      notifications.filter((notification) => notification.id !== id)
+    );
+  };
+
+  return (
+    <div style={{ maxWidth: "400px" }}>
+      <button onClick={addNotification}>Simulate Notification</button>
+
+      <ul style={{ marginTop: "20px", padding: 0 }}>
+        {notifications.length === 0 && <p>No notifications</p>}
+
+        {notifications.map((notification) => (
+          <li
+            key={notification.id}
+            style={{
+              listStyle: "none",
+              border: "1px solid #ccc",
+              padding: "10px",
+              marginBottom: "10px"
+            }}
+          >
+            <strong>{notification.message}</strong>
+            <br />
+            <small>{notification.time}</small>
+            <br />
+            <button
+              onClick={() => dismissNotification(notification.id)}
+              style={{ marginTop: "5px" }}
+            >
+              Dismiss
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
+export default NotificationCenter;
+
+
+
+
+// App.jsx
+import React from "react";
+import NotificationCenter from "./assets/core consept/Hello world/NotificationCenter/NotificationCenter";
+
+function App() {
+  return (
+    <div style={{ padding: "20px" }}>
+      <h1>Dashboard</h1>
+      <NotificationCenter />
+    </div>
+  );
+}
+
+export default App;
+

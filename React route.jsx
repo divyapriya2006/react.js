@@ -1,102 +1,68 @@
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
-App.jsx
-import { lBrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Dashboard from "./react";
-import Profile from "./react";
-import Courses from "./react";
-import Results from "./react";
-
-function App() {
+function Navbar() {
   return (
-    <BrowserRouter>
-      <nav style={styles.nav}>
-        <Link to="/" style={styles.link}>Dashboard</Link>
-        <Link to="/profile" style={styles.link}>Profile</Link>
-        <Link to="/courses" style={styles.link}>Courses</Link>
-        <Link to="/results" style={styles.link}>Results</Link>
-      </nav>
-
-      <Routes>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/courses" element={<Courses />} />
-        <Route path="/results" element={<Results />} />
-      </Routes>
-    </BrowserRouter>
+    <nav className="bg-blue-600 p-4 text-white flex gap-6">
+      <Link to="/" className="hover:underline">Dashboard</Link>
+      <Link to="/profile" className="hover:underline">Profile</Link>
+      <Link to="/courses" className="hover:underline">Courses</Link>
+      <Link to="/settings" className="hover:underline">Settings</Link>
+    </nav>
   );
 }
 
-const styles = {
-  nav: {
-    padding: "15px",
-    background: "#1e293b",
-    display: "flex",
-    gap: "20px"
-  },
-  link: {
-    color: "white",
-    textDecoration: "none",
-    fontSize: "18px"
-  }
-};
-
-export default App;
-
-react.jsx
-
-export default function Dashboard() {
+function Dashboard() {
   return (
-    <div style={page}>
-      <h1>Student Dashboard</h1>
-      <p>Welcome to your dashboard</p>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-2">Student Dashboard</h1>
+      <p>Welcome to your dashboard. View your activities here.</p>
     </div>
   );
 }
 
-export function Profile() {
+function Profile() {
   return (
-    <div style={page}>
-      <h1>Student Profile</h1>
-      <p>Name: Divya</p>
-      <p>Department: CSE</p>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-2">Profile</h1>
+      <p>Name: Student Name</p>
+      <p>Department: Computer Science</p>
     </div>
   );
 }
 
-export function Courses() {
+function Courses() {
   return (
-    <div style={page}>
-      <h1>My Courses</h1>
-      <ul>
-        <li>React JS</li>
-        <li>Cloud Computing</li>
-        <li>Cyber Security</li>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-2">Courses</h1>
+      <ul className="list-disc pl-6">
+        <li>Data Structures</li>
+        <li>Web Development</li>
+        <li>Machine Learning</li>
       </ul>
     </div>
   );
 }
 
-export function Results() {
+function Settings() {
   return (
-    <div style={page}>
-      <h1>Results</h1>
-      <p>React JS: A+</p>
-      <p>Cloud Computing: A</p>
+    <div className="p-6">
+      <h1 className="text-2xl font-bold mb-2">Settings</h1>
+      <p>Manage your account settings here.</p>
     </div>
   );
 }
 
-const page = {
-  padding: "30px",
-  fontFamily: "Arial"
-};
-main.jsx
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
+export default function App() {
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/settings" element={<Settings />} />
+      </Routes>
+    </Router>
+  );
+}
 
-ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
